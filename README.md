@@ -13,7 +13,7 @@ El sistema permite:
 ---
 
 ## 👥 Integrantes
-- **elmer jesus galvan oquendo**
+- elmer jesus galvan oquendo
 - juan david berrio durango
 
 ---
@@ -42,3 +42,56 @@ El sistema permite:
 
 ## ⚙️ Estructura del proyecto
 
+---
+
+## 🧩 Diagramas UML
+
+### 🧱 Diagrama de Clases
+
+El siguiente diagrama representa la estructura del sistema **EnvíaConecta**, integrando los patrones de diseño **MVC**, **Factory Method**, **Bridge**, **State** y **Strategy**.
+
+![Diagrama de Clases](.idea/uml/uml-proyecto.jpg)
+
+
+
+
+**Descripción general:**
+- El **ControladorPrincipal** gestiona la comunicación entre **ModeloPaquete** y **VistaEnvio**.
+- El **Factory Method** se usa para crear envíos (aéreos o terrestres).
+- El **ModeloPaquete** aplica:
+    - **Strategy** para calcular costos.
+    - **Bridge** para separar el tipo de envío.
+    - **State** para manejar los estados del paquete.
+
+---
+
+### 🔁 Diagrama de Secuencia: *Registro de Envío*
+
+```text
+Usuario -> VistaEnvio : ingresarDatosEnvio()
+VistaEnvio -> ControladorPrincipal : registrarPaquete()
+ControladorPrincipal -> FabricaEnvio : crearEnvio(destino)
+FabricaEnvio -> Envio : new EnvioAereo() / EnvioTerrestre()
+ControladorPrincipal -> ModeloPaquete : setEnvio(Envio)
+ModeloPaquete -> EstrategiaCosto : calcular(peso)
+ModeloPaquete -> EstadoEnvio : setEstado(Preparando)
+ModeloPaquete -> VistaEnvio : mostrarPaquete()
+``` 
+
+### 💬 Reflexión final
+
+### ✅ **Ventajas**
+- Alta **modularidad**: cada componente cumple una función específica.  
+- **Extensibilidad:** se pueden agregar nuevos tipos de envío, estrategias o estados sin alterar el código existente.  
+- **Mantenibilidad:** los patrones reducen el acoplamiento y facilitan la comprensión del sistema.  
+- Aplicación clara del **principio de abierto/cerrado (OCP)**.
+
+### ⚠️ **Limitaciones**
+- Aumenta la **complejidad estructural**, ya que hay muchas clases y relaciones.  
+- Puede requerir **mayor tiempo de desarrollo** por el uso combinado de múltiples patrones.
+
+### 💡 **Posibles mejoras** 
+- Agregar una **interfaz gráfica más interactiva** para simular el flujo de los envíos.  
+- Incluir un módulo de **persistencia de datos** (por ejemplo, con archivos o base de datos).
+
+---
